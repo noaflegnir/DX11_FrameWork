@@ -1,0 +1,54 @@
+/**
+* @file		DirectX11.h
+* @brief	DirectX11の基本動作
+* @author	小山智也
+* @date		2019/03/18
+*/
+#pragma once
+
+#pragma warning (disable : 4005)
+#pragma warning (disable : 4838)
+
+#include "../../Windows/Windows.h"
+#include "../Graphics.h"
+
+#include <xnamath.h>
+#include <d3d11.h>
+#include <d3dx11.h>
+
+#pragma comment(lib, "d3d11.lib")
+#if defined(DEBUG) || defined(_DEBUG)
+#pragma comment(lib, "d3dx11d.lib")
+#else
+#pragma comment(lib, "d3dx11.lib")
+#endif
+
+class DirectX11 : public Graphics {
+
+	friend Windows;
+
+public:
+	ID3D11Device*        GetDevice(void)		{ return _device; }		// デバイスの受け渡し
+	ID3D11DeviceContext* GetDeviceContext(void) { return _deviceContext; }		// コンテキストの受け渡し
+	IDXGISwapChain*		 GetSwapChain(void)		{ return _swapChain;; }
+
+private:
+	DirectX11(Windows* window);
+
+	HRESULT Init()		override;
+	void Uninit()		override;
+	HRESULT DrawBegin() override;
+	void DrawEnd()		override;
+
+	void ClearRenderer(void) override;		// 画面のクリア
+
+	HRESULT InitAll();
+	bool SetDevice();
+
+	IDXGISwapChain*         _swapChain;
+	ID3D11Device*           _device;			// DirectXの機能
+	ID3D11DeviceContext*    _deviceContext;		// GPUの方
+	ID3D11RenderTargetView* _renderTargetView;
+	ID3D11DepthStencilView* _depthStencilView;
+
+};

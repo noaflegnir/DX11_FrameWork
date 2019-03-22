@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="FrameWork">
+      <UniqueIdentifier>{1cf757b1-4306-4236-a7a2-967487408345}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Systems">
+      <UniqueIdentifier>{2adc2663-a902-47be-b04c-57c61d2617bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Define">
+      <UniqueIdentifier>{79694460-0623-4a43-a0ba-fe87c8d312dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\WIndow">
+      <UniqueIdentifier>{33aef616-4553-4bc4-9b02-3af4bd74f17c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Graphics">
+      <UniqueIdentifier>{7f1c72a0-cf34-4adf-985c-7165364f960c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Graphics\DirectX11">
+      <UniqueIdentifier>{74a7863a-c9d2-4e68-836e-16243992ebbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Systems\Debug">
+      <UniqueIdentifier>{af71dfe4-1b66-4fe3-92b9-24c7934099a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Systems\Debug\ImGui">
+      <UniqueIdentifier>{38111604-0bc8-460a-96d1-909d75ca14c1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Sources\Main.cpp">
+      <Filter>FrameWork</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Windows\Windows.cpp">
+      <Filter>FrameWork\WIndow</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Graphics\DirectX11\DirectX11.cpp">
+      <Filter>FrameWork\Graphics\DirectX11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Graphics\DirectX11\WICTextureLoader.cpp">
+      <Filter>FrameWork\Graphics\DirectX11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Graphics\DirectX11\DirectX11Wrapper.cpp">
+      <Filter>FrameWork\Graphics\DirectX11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Systems\Systems.cpp">
+      <Filter>FrameWork\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Systems\Debug\ImGui\imgui.cpp">
+      <Filter>FrameWork\Systems\Debug\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Systems\Debug\ImGui\imgui_draw.cpp">
+      <Filter>FrameWork\Systems\Debug\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Systems\Debug\ImGui\imgui_impl_dx11.cpp">
+      <Filter>FrameWork\Systems\Debug\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Systems\Debug\ImGui\imgui_impl_win32.cpp">
+      <Filter>FrameWork\Systems\Debug\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Systems\Debug\ImGui\imgui_widgets.cpp">
+      <Filter>FrameWork\Systems\Debug\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Systems\Debug\Debug.cpp">
+      <Filter>FrameWork\Systems\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Systems\Debug\Gui.cpp">
+      <Filter>FrameWork\Systems\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Systems\Debug\GuiManager.cpp">
+      <Filter>FrameWork\Systems\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Systems\TextureManager.cpp">
+      <Filter>FrameWork\Systems</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Sources\Define\Define.h">
+      <Filter>FrameWork\Define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Define\Color.h">
+      <Filter>FrameWork\Define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Windows\API.h">
+      <Filter>FrameWork\WIndow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Windows\Windows.h">
+      <Filter>FrameWork\WIndow</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Graphics\DirectX11\DirectX11.h">
+      <Filter>FrameWork\Graphics\DirectX11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Graphics\Graphics.h">
+      <Filter>FrameWork\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Graphics\DirectX11\WICTextureLoader.h">
+      <Filter>FrameWork\Graphics\DirectX11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Graphics\DirectX11\DirectX11Wrapper.h">
+      <Filter>FrameWork\Graphics\DirectX11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Graphics\Wrapper.h">
+      <Filter>FrameWork\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Systems\Systems.h">
+      <Filter>FrameWork\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Systems\BaseManager.h">
+      <Filter>FrameWork\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Systems\Debug\ImGui\imconfig.h">
+      <Filter>FrameWork\Systems\Debug\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Systems\Debug\ImGui\imgui.h">
+      <Filter>FrameWork\Systems\Debug\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Systems\Debug\ImGui\imgui_impl_dx11.h">
+      <Filter>FrameWork\Systems\Debug\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Systems\Debug\ImGui\imgui_impl_win32.h">
+      <Filter>FrameWork\Systems\Debug\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Systems\Debug\ImGui\imgui_internal.h">
+      <Filter>FrameWork\Systems\Debug\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Systems\Debug\ImGui\imstb_rectpack.h">
+      <Filter>FrameWork\Systems\Debug\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Systems\Debug\ImGui\imstb_textedit.h">
+      <Filter>FrameWork\Systems\Debug\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Systems\Debug\ImGui\imstb_truetype.h">
+      <Filter>FrameWork\Systems\Debug\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Systems\Debug\ImGui\stb_rect_pack.h">
+      <Filter>FrameWork\Systems\Debug\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Systems\Debug\ImGui\stb_textedit.h">
+      <Filter>FrameWork\Systems\Debug\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Systems\Debug\ImGui\stb_truetype.h">
+      <Filter>FrameWork\Systems\Debug\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Systems\Debug\Debug.h">
+      <Filter>FrameWork\Systems\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Systems\Debug\Gui.h">
+      <Filter>FrameWork\Systems\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Systems\Debug\GuiManager.h">
+      <Filter>FrameWork\Systems\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Systems\TextureManager.h">
+      <Filter>FrameWork\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Define\Vector.h">
+      <Filter>FrameWork\Define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\TextureResource.h">
+      <Filter>FrameWork</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
