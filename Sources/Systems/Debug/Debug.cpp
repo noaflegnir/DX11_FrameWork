@@ -29,6 +29,8 @@ HRESULT Debug::Init()
 	}
 	return S_OK;
 #endif
+
+	return S_OK;
 }
 
 void Debug::Uninit()

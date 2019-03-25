@@ -29,6 +29,18 @@
     <Filter Include="FrameWork\Systems\Debug\ImGui">
       <UniqueIdentifier>{38111604-0bc8-460a-96d1-909d75ca14c1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FrameWork\Systems\Model">
+      <UniqueIdentifier>{a4fb77b0-ddd0-4238-b93c-b14a7fcd681a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Systems\Model\XModel">
+      <UniqueIdentifier>{0d57739d-1261-4c90-9530-61327543d509}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Systems\Model\FBXModel">
+      <UniqueIdentifier>{2fba3e5e-de5e-4858-81a0-2411da811385}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Systems\Model\MMDModel">
+      <UniqueIdentifier>{5e640553-0ae1-4345-b2c7-e25da34a328c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Sources\Main.cpp">
@@ -75,6 +87,18 @@
     </ClCompile>
     <ClCompile Include="..\Sources\Systems\TextureManager.cpp">
       <Filter>FrameWork\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Systems\ModelLoader\ModelLoader.cpp">
+      <Filter>FrameWork\Systems\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Systems\ModelLoader\ModelManager.cpp">
+      <Filter>FrameWork\Systems\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Systems\ModelLoader\XModelLoader\XModelLoader.cpp">
+      <Filter>FrameWork\Systems\Model\XModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Systems\ModelLoader\FBXLoader\FBXLoader.cpp">
+      <Filter>FrameWork\Systems\Model\FBXModel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -161,6 +185,21 @@
     </ClInclude>
     <ClInclude Include="..\Sources\TextureResource.h">
       <Filter>FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Systems\ModelLoader\ModelLoader.h">
+      <Filter>FrameWork\Systems\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Systems\ModelLoader\ModelManager.h">
+      <Filter>FrameWork\Systems\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Systems\ModelLoader\XModelLoader\XModelLoader.h">
+      <Filter>FrameWork\Systems\Model\XModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Systems\ModelLoader\FBXLoader\FBXLoader.h">
+      <Filter>FrameWork\Systems\Model\FBXModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Graphics\DirectX11\DirectX11Include.h">
+      <Filter>FrameWork\Graphics\DirectX11</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

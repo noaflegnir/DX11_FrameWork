@@ -16,8 +16,8 @@ HRESULT Systems::Init(void)
 	for (auto& i : _manager) { i = nullptr; }
 
 	//!!! ここでクリエイトするのはサウンドやインプットなどのもの + シーンマネージャ
-	if (!Create<Debug>((int)SYSTEM_NUM::DEBUG, "Debug")) { return E_FAIL; }
-
+	if (!Create<Debug>			((int)SYSTEM_NUM::DEBUG	  ,	"デバッグ"))	{ return E_FAIL; }
+	if (!Create<TextureManager>	((int)SYSTEM_NUM::TEXTURE ,	"テクスチャ"))	{ return E_FAIL; }
 
 
 
@@ -29,7 +29,16 @@ void Systems::Uninit(void)
 {
 	// forを逆からデクリで各マネージャ内部を解放していく
 	// 後処理 重要なのを最後に？
-	for (int i = (int)SYSTEM_NUM::MAX - 1; i >= 0; --i)
+	//for (int i = (int)SYSTEM_NUM::MAX - 1; i >= 0; --i)
+	//{
+	//	if (_manager[i])
+	//	{
+	//		_manager[i]->Uninit();
+	//		DeleteThis(_manager[i]);
+	//	}
+	//}
+
+	for (int i = 0;i < (int)SYSTEM_NUM::MAX;i++)
 	{
 		if (_manager[i])
 		{

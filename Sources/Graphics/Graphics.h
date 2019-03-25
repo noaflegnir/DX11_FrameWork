@@ -6,7 +6,7 @@
 */
 #pragma once
 
-#include "../Windows/Windows.h"
+#include "Wrapper.h"
 
 class Graphics {
 
@@ -17,18 +17,21 @@ public:
 	static constexpr int WIDTH = 1280;
 	static constexpr int HEIGHT = 720;
 
-	Windows* GetWindow(void) { return window_; }		// ウィンドウクラスの受け渡し
+	Windows* GetWindow(void) { return _window; }
+
+	inline Wrapper*	GetWrapper(void) { return _wrapper; }
 
 protected:
-	Graphics(Windows* window) { window_ = window; }
+	Graphics(Windows* window) { _window = window; }
 
-	virtual HRESULT Init(void) = 0;	// 初期化処理
-	virtual void	Uninit(void) = 0;	// 後処理
-	virtual HRESULT DrawBegin(void) = 0;	// 描画開始
-	virtual void	DrawEnd(void) = 0;	// 描画終了
+	virtual HRESULT Init(void) = 0;
+	virtual void	Uninit(void) = 0;
+	virtual HRESULT DrawBegin(void) = 0;
+	virtual void	DrawEnd(void) = 0;
 
 	virtual void    ClearRenderer(void) {}	// 画面のクリア
 
-	Windows* window_;		// ウィンドウクラスへのポインタ
+	Windows* _window;		// ウィンドウクラスへのポインタ
+	Wrapper* _wrapper;
 
 };

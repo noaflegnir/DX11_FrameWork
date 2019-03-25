@@ -1,4 +1,5 @@
 #include "DirectX11.h"
+#include "DirectX11Wrapper.h"
 
 DirectX11::DirectX11(Windows* window)
 	: Graphics			(window)
@@ -13,7 +14,12 @@ HRESULT DirectX11::Init()
 {
 	SetDevice();
 
-	// ラッパーの初期化？
+	// ラッパーの初期化
+	_wrapper = new DX11Wrapper(this);
+	if (_wrapper)
+	{
+		_wrapper->Init();
+	}
 
 	return S_OK;
 }
@@ -21,8 +27,8 @@ HRESULT DirectX11::Init()
 void DirectX11::Uninit()
 {
 	// ラッパーの消去
-	//wrapper_->Uninit();
-	//DeletePtr(wrapper_);
+	_wrapper->Uninit();
+	DeleteThis(_wrapper);
 
 	ReleaseThis(_renderTargetView);
 	ReleaseThis(_swapChain);
@@ -114,7 +120,7 @@ bool DirectX11::SetDevice()
 	sd_.BufferDesc.RefreshRate.Numerator = 60;		// 分子
 	sd_.BufferDesc.RefreshRate.Denominator = 1;		// 分母
 	sd_.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-	sd_.OutputWindow = window_->GetHWND();
+	sd_.OutputWindow = _window->GetHWND();
 	sd_.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 	sd_.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 	sd_.Windowed = true;

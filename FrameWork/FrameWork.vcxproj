@@ -76,8 +76,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(DXSDK_DIR)include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>../FrameWork\DX11SDK\include;$(IncludePath)</IncludePath>
+    <LibraryPath>../FrameWork\DX11SDK\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -86,8 +86,9 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(DXSDK_DIR)include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DXSDK_DIR)include;../FrameWork\DX11SDK\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)lib\x64;../FrameWork\DX11SDK\lib\x64;$(LibraryPath)</LibraryPath>
+    <OutDir>$(SolutionDir)</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -168,6 +169,10 @@
     <ClCompile Include="..\Sources\Systems\Debug\ImGui\imgui_impl_dx11.cpp" />
     <ClCompile Include="..\Sources\Systems\Debug\ImGui\imgui_impl_win32.cpp" />
     <ClCompile Include="..\Sources\Systems\Debug\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="..\Sources\Systems\ModelLoader\FBXLoader\FBXLoader.cpp" />
+    <ClCompile Include="..\Sources\Systems\ModelLoader\ModelLoader.cpp" />
+    <ClCompile Include="..\Sources\Systems\ModelLoader\ModelManager.cpp" />
+    <ClCompile Include="..\Sources\Systems\ModelLoader\XModelLoader\XModelLoader.cpp" />
     <ClCompile Include="..\Sources\Systems\Systems.cpp" />
     <ClCompile Include="..\Sources\Systems\TextureManager.cpp" />
     <ClCompile Include="..\Sources\Windows\Windows.cpp" />
@@ -177,6 +182,7 @@
     <ClInclude Include="..\Sources\Define\Define.h" />
     <ClInclude Include="..\Sources\Define\Vector.h" />
     <ClInclude Include="..\Sources\Graphics\DirectX11\DirectX11.h" />
+    <ClInclude Include="..\Sources\Graphics\DirectX11\DirectX11Include.h" />
     <ClInclude Include="..\Sources\Graphics\DirectX11\DirectX11Wrapper.h" />
     <ClInclude Include="..\Sources\Graphics\DirectX11\WICTextureLoader.h" />
     <ClInclude Include="..\Sources\Graphics\Graphics.h" />
@@ -196,6 +202,10 @@
     <ClInclude Include="..\Sources\Systems\Debug\ImGui\stb_rect_pack.h" />
     <ClInclude Include="..\Sources\Systems\Debug\ImGui\stb_textedit.h" />
     <ClInclude Include="..\Sources\Systems\Debug\ImGui\stb_truetype.h" />
+    <ClInclude Include="..\Sources\Systems\ModelLoader\FBXLoader\FBXLoader.h" />
+    <ClInclude Include="..\Sources\Systems\ModelLoader\ModelLoader.h" />
+    <ClInclude Include="..\Sources\Systems\ModelLoader\ModelManager.h" />
+    <ClInclude Include="..\Sources\Systems\ModelLoader\XModelLoader\XModelLoader.h" />
     <ClInclude Include="..\Sources\Systems\Systems.h" />
     <ClInclude Include="..\Sources\Systems\TextureManager.h" />
     <ClInclude Include="..\Sources\TextureResource.h" />

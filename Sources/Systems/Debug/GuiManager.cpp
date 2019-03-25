@@ -48,6 +48,7 @@ HRESULT GuiManager::Init(void)
 
 	return S_OK;
 #endif
+	return S_OK;
 }
 
 

@@ -14,17 +14,20 @@
 
 class TextureManager : public Interface {
 
+	friend Systems;
+
 public:
-	TextureManager(Systems* systems);
 	~TextureManager(){}
 
+
+private:
+	TextureManager(Systems* systems);
 	HRESULT Init() override;
 	void Uninit() override;
 
-private:
-
-
 	HRESULT Load();
 	void Unload();
+
+	TextureResource* _texRes;
 
 };

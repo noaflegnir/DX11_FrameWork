@@ -1,6 +1,7 @@
 #include "TextureManager.h"
 #include "Systems.h"
-#include "../Graphics/DirectX11/WICTextureLoader.h"
+#include "BaseManager.h"
+
 
 TextureManager::TextureManager(Systems* systems)
 	: Interface (systems)
@@ -9,28 +10,55 @@ TextureManager::TextureManager(Systems* systems)
 
 HRESULT TextureManager::Init()
 {
-	HRESULT hr = Load();
+	_texRes = new TextureResource();
 
-	if (FAILED(hr))
-	{
-		return E_FAIL;
-	}
+	Load();
 	return S_OK;
 }
 
 void TextureManager::Uninit()
 {
 	Unload();
+
+	DeleteThis(_texRes);
 }
 
 HRESULT TextureManager::Load()
 {
-	//HRESULT hr = DirectX::CreateWICTextureFromFile()
-	//_tex->TextureFilePath[0];
+	if (!_systems) { return E_FAIL; }
 
-	return S_OK;
+	HRESULT hr = S_OK;
+
+	if (const auto& graphics_ = _systems->GetGraphics())
+	{
+
+		if (const auto& wrapper_ = graphics_->GetWrapper())
+		{
+			for (int i = 0; i < _texRes->MAX;i++)
+			{
+				hr = wrapper_->LoadTexture(_texRes->TextureFilePath[i], 0);
+				if (FAILED(hr))
+				{
+					MessageBox(_systems->GetWindow()->GetHWND(), "テクスチャのロードに失敗", "エラー", MB_OK);
+					return hr;
+				}
+			}
+		}
+	}
+
+	return hr;
 }
 
 void TextureManager::Unload()
 {
+	if (const auto& graphics_ = _systems->GetGraphics())
+	{
+		if (const auto& wrapper_ = graphics_->GetWrapper())
+		{
+			for (int i = 0; i < _texRes->MAX;i++)
+			{
+				wrapper_->ReleaseTexture(i);
+			}
+		}
+	}
 }

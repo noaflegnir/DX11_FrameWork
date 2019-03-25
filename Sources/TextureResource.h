@@ -2,21 +2,24 @@
 
 #include "Define/Define.h"
 
-namespace TextureResource
-{
-	class Texture {
+class TextureResource {
 
-		const string directory_ = "./Resource/Texture/";
+#ifdef _DEBUG
+	const string directory_ = "../Resource/Texture/";
+#else
+	const string directory_ = "./Resource/Texture/";
+#endif
 
-	public:
 
-		enum TEXTURE_NUM {
-			TEST = 0,
-			MAX
-		};
+public:
 
-		const string TextureFilePath[MAX] = {
-			{ directory_ + "aaa" },
-		};
+	enum TEXTURE_NUM {
+		TITLE = 0,
+		MAX,
 	};
-}
+
+	const string TextureFilePath[MAX] = {
+		{ directory_ + "title.png" },
+	};
+
+};

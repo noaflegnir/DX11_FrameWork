@@ -9,7 +9,8 @@
 #include "../Define/Define.h"
 #include "../Windows/Windows.h"
 
-#include "Debug\Debug.h"
+#include "Debug/Debug.h"
+#include "TextureManager.h"
 
 
 #include "BaseManager.h"
@@ -20,6 +21,7 @@ class Systems {
 
 	enum class SYSTEM_NUM {
 		DEBUG = 0,
+		TEXTURE,
 		MAX,
 	};
 
@@ -30,7 +32,7 @@ class Systems {
 
 public:
 	static Systems* Instance(void)		{ return _system; }
-	Graphics*       GetRenderer(void)	{ return _graphics; }
+	Graphics*       GetGraphics(void)	{ return _graphics; }
 	Windows*        GetWindow(void)		{ return _window; }
 
 	Debug* GetDebug(void) { return (Debug*)_manager[(int)SYSTEM_NUM::DEBUG]; }
