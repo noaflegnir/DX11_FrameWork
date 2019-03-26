@@ -11,6 +11,8 @@
 
 #include "Debug/Debug.h"
 #include "TextureManager.h"
+#include "Input/Input.h"
+#include "ModelLoader/ModelLoader.h"
 
 
 #include "BaseManager.h"
@@ -22,6 +24,8 @@ class Systems {
 	enum class SYSTEM_NUM {
 		DEBUG = 0,
 		TEXTURE,
+		INPUT,
+		MODEL,
 		MAX,
 	};
 
@@ -31,22 +35,22 @@ class Systems {
 
 
 public:
-	static Systems* Instance(void)		{ return _system; }
-	Graphics*       GetGraphics(void)	{ return _graphics; }
-	Windows*        GetWindow(void)		{ return _window; }
+	static Systems* Instance()		{ return _system;	}
+	Graphics*       GetGraphics()	{ return _graphics;	}
+	Windows*        GetWindow()		{ return _window;	}
 
-	Debug* GetDebug(void) { return (Debug*)_manager[(int)SYSTEM_NUM::DEBUG]; }
+	Debug* GetDebug() { return (Debug*)_manager[(int)SYSTEM_NUM::DEBUG]; }
+	Input* GetInput() { return (Input*)_manager[(int)SYSTEM_NUM::INPUT]; }
 
 
 private:
-	// Windowsクラスのみが使用
 	Systems(Windows* window);
-	HRESULT Init(void);
-	void Uninit(void);
-	void Update(void);
-	void Draw(void);
+	HRESULT Init();
+	void Uninit();
+	void Update();
+	void Draw();
 
-	// 自分自身が使う
+	// 自分で使うやつ
 	template<class T>
 	bool Create(int i, string error);
 

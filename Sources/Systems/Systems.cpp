@@ -9,6 +9,7 @@ Systems::Systems(Windows* window)
 	_graphics = window->GetGraphics();
 }
 
+
 HRESULT Systems::Init(void)
 {
 	_system = this;
@@ -16,10 +17,14 @@ HRESULT Systems::Init(void)
 	for (auto& i : _manager) { i = nullptr; }
 
 	//!!! ここでクリエイトするのはサウンドやインプットなどのもの + シーンマネージャ
-	if (!Create<Debug>			((int)SYSTEM_NUM::DEBUG	  ,	"デバッグ"))	{ return E_FAIL; }
+	if (!Create<Debug>			((int)SYSTEM_NUM::DEBUG	  ,	"デバッグ"	))	{ return E_FAIL; }
 	if (!Create<TextureManager>	((int)SYSTEM_NUM::TEXTURE ,	"テクスチャ"))	{ return E_FAIL; }
+	if (!Create<Input>			((int)SYSTEM_NUM::INPUT	  , "入力"		))	{ return E_FAIL; }
 
+	/* pmxモデルローダーは制作段階 */
+	if (!Create<ModelLoader>	((int)SYSTEM_NUM::MODEL	  , "モデル"	))	{ return E_FAIL; }
 
+	
 
 	return S_OK;
 }
@@ -48,6 +53,7 @@ void Systems::Uninit(void)
 	}
 }
 
+
 void Systems::Update(void)
 {
 	for (int i = 0; i < (int)SYSTEM_NUM::MAX; ++i)
@@ -59,20 +65,12 @@ void Systems::Update(void)
 	}
 }
 
+
 void Systems::Draw(void)
 {
-	// 影の描画
-	//const auto& objRenderer = (ObjectRendererManager*)manager_[(int)SystemsNum::OBJECTRENDERER];
-	//objRenderer->DrawShadow();
-
+	// クリア
 	_window->GetGraphics()->ClearRenderer();
 
-	// ゲームの描画
-	//const auto& scene = (SceneManager*)_manager[(int)SYSTEM_NUM::SCENE];
-	//scene->Draw();
-
-	// 天球とフィールドを先に描画
-	//objRenderer->FastDraw();
 
 	for (int i = 0; i < (int)SYSTEM_NUM::MAX; ++i)
 	{
@@ -83,6 +81,7 @@ void Systems::Draw(void)
 
 	_manager[(int)SYSTEM_NUM::DEBUG]->Draw();
 }
+
 
 template<class T>
 bool Systems::Create(int i, string error)

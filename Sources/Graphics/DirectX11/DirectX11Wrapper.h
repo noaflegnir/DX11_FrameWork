@@ -8,8 +8,10 @@
 
 #include "DirectX11.h"
 #include "../Wrapper.h"
+#include "../../Systems/ModelLoader/PMXLoader/PMXLoader.h"
 
 #include "../../TextureResource.h"
+
 
 class DX11Wrapper : public Wrapper {
 
@@ -37,8 +39,18 @@ public:
 	/* @brief	テクスチャのサイズ取得	*/
 	VECTOR2 GetTextureSize(int num) override;
 
+	/* @brief	pmxファイルの読み込み*/
+	HRESULT LoadpmxModel(PMXModelData& data, const wstring& file) override;
+	void ReleasepmxModel() override;
+
 
 private:
+
+	// pmx関係
+	HRESULT GetPMXStringUTF16(ifstream& file, wstring& output);
+	bool LoadPMX(PMXModelData& data, const wstring& file);
+
+	void SetPMXModelData(PMXModelData data, int i) override;
 
 	// DirectX11のテクスチャ情報
 	struct DX11Texture : public TextureData
@@ -56,4 +68,6 @@ private:
 
 	DX11Texture _texture[TextureResource::MAX];
 	std::vector<std::vector<DX11Texture>>	texture_;
+
+	PMXModelData _pmxData[ModelResource::MAX]{};
 };

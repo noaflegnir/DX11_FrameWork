@@ -38,7 +38,13 @@
     <Filter Include="FrameWork\Systems\Model\FBXModel">
       <UniqueIdentifier>{2fba3e5e-de5e-4858-81a0-2411da811385}</UniqueIdentifier>
     </Filter>
-    <Filter Include="FrameWork\Systems\Model\MMDModel">
+    <Filter Include="FrameWork\Systems\Input">
+      <UniqueIdentifier>{74d082e5-1878-4118-8b86-5721d249b210}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Scene">
+      <UniqueIdentifier>{536eaaea-666b-42d6-b5b9-0ace60fed48b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Systems\Model\PMXModel">
       <UniqueIdentifier>{5e640553-0ae1-4345-b2c7-e25da34a328c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -99,6 +105,18 @@
     </ClCompile>
     <ClCompile Include="..\Sources\Systems\ModelLoader\FBXLoader\FBXLoader.cpp">
       <Filter>FrameWork\Systems\Model\FBXModel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Systems\Input\Input.cpp">
+      <Filter>FrameWork\Systems\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Systems\Input\KeyInput.cpp">
+      <Filter>FrameWork\Systems\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Systems\Input\XInput.cpp">
+      <Filter>FrameWork\Systems\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Systems\ModelLoader\PMXLoader\PMXLoader.cpp">
+      <Filter>FrameWork\Systems\Model\PMXModel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -200,6 +218,21 @@
     </ClInclude>
     <ClInclude Include="..\Sources\Graphics\DirectX11\DirectX11Include.h">
       <Filter>FrameWork\Graphics\DirectX11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Systems\Input\Input.h">
+      <Filter>FrameWork\Systems\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Systems\Input\KeyInput.h">
+      <Filter>FrameWork\Systems\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Systems\Input\XInput.h">
+      <Filter>FrameWork\Systems\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Systems\ModelLoader\PMXLoader\PMXLoader.h">
+      <Filter>FrameWork\Systems\Model\PMXModel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\ModelResource.h">
+      <Filter>FrameWork</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

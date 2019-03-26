@@ -1,15 +1,8 @@
-﻿  DirectX11.cpp
-  DirectX11Wrapper.cpp
-  Debug.cpp
-  Gui.cpp
-  GuiManager.cpp
-  Systems.cpp
-  TextureManager.cpp
-  Windows.cpp
+﻿  Gui.cpp
   コード生成しています。
-  18 of 590 functions ( 3.1%) were compiled, the rest were copied from previous compilation.
+  72 of 1342 functions ( 5.4%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    3 functions had inline decision re-evaluated but remain unchanged
+    22 functions had inline decision re-evaluated but remain unchanged
   コード生成が終了しました。
   FrameWork.vcxproj -> C:\Users\yato\Desktop\DX11_FrameWork\FrameWork.exe
   FrameWork.vcxproj -> C:\Users\yato\Desktop\DX11_FrameWork\FrameWork.pdb (Full PDB)

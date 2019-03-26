@@ -1,3 +1,9 @@
+/**
+* @file		DirectX11Include.h
+* @brief	DirectX11関係のインクルード群
+* @author	小山智也
+* @date		2019/03/26
+*/
 #pragma once
 
 #include "../../Define/Define.h"

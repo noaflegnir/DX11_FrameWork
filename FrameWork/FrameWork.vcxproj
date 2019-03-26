@@ -169,9 +169,13 @@
     <ClCompile Include="..\Sources\Systems\Debug\ImGui\imgui_impl_dx11.cpp" />
     <ClCompile Include="..\Sources\Systems\Debug\ImGui\imgui_impl_win32.cpp" />
     <ClCompile Include="..\Sources\Systems\Debug\ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="..\Sources\Systems\Input\Input.cpp" />
+    <ClCompile Include="..\Sources\Systems\Input\KeyInput.cpp" />
+    <ClCompile Include="..\Sources\Systems\Input\XInput.cpp" />
     <ClCompile Include="..\Sources\Systems\ModelLoader\FBXLoader\FBXLoader.cpp" />
     <ClCompile Include="..\Sources\Systems\ModelLoader\ModelLoader.cpp" />
     <ClCompile Include="..\Sources\Systems\ModelLoader\ModelManager.cpp" />
+    <ClCompile Include="..\Sources\Systems\ModelLoader\PMXLoader\PMXLoader.cpp" />
     <ClCompile Include="..\Sources\Systems\ModelLoader\XModelLoader\XModelLoader.cpp" />
     <ClCompile Include="..\Sources\Systems\Systems.cpp" />
     <ClCompile Include="..\Sources\Systems\TextureManager.cpp" />
@@ -187,6 +191,7 @@
     <ClInclude Include="..\Sources\Graphics\DirectX11\WICTextureLoader.h" />
     <ClInclude Include="..\Sources\Graphics\Graphics.h" />
     <ClInclude Include="..\Sources\Graphics\Wrapper.h" />
+    <ClInclude Include="..\Sources\ModelResource.h" />
     <ClInclude Include="..\Sources\Systems\BaseManager.h" />
     <ClInclude Include="..\Sources\Systems\Debug\Debug.h" />
     <ClInclude Include="..\Sources\Systems\Debug\Gui.h" />
@@ -202,9 +207,13 @@
     <ClInclude Include="..\Sources\Systems\Debug\ImGui\stb_rect_pack.h" />
     <ClInclude Include="..\Sources\Systems\Debug\ImGui\stb_textedit.h" />
     <ClInclude Include="..\Sources\Systems\Debug\ImGui\stb_truetype.h" />
+    <ClInclude Include="..\Sources\Systems\Input\Input.h" />
+    <ClInclude Include="..\Sources\Systems\Input\KeyInput.h" />
+    <ClInclude Include="..\Sources\Systems\Input\XInput.h" />
     <ClInclude Include="..\Sources\Systems\ModelLoader\FBXLoader\FBXLoader.h" />
     <ClInclude Include="..\Sources\Systems\ModelLoader\ModelLoader.h" />
     <ClInclude Include="..\Sources\Systems\ModelLoader\ModelManager.h" />
+    <ClInclude Include="..\Sources\Systems\ModelLoader\PMXLoader\PMXLoader.h" />
     <ClInclude Include="..\Sources\Systems\ModelLoader\XModelLoader\XModelLoader.h" />
     <ClInclude Include="..\Sources\Systems\Systems.h" />
     <ClInclude Include="..\Sources\Systems\TextureManager.h" />

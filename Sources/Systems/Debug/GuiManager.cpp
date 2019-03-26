@@ -5,6 +5,7 @@
 #include "../../Graphics/DirectX11/DirectX11.h"
 #include "../../Windows/Windows.h"
 #include "../Systems.h"
+#include "../Input/KeyInput.h"
 
 GuiManager::GuiManager(void)
 	: BaseManager	(Systems::Instance())
@@ -55,6 +56,12 @@ HRESULT GuiManager::Init(void)
 void GuiManager::Uninit(void)
 {
 #ifdef _DEBUG
+
+	for (int i = 0; i < static_cast<int>(obj_.size());)
+	{
+		RemoveVector(obj_, obj_[0]);
+	}
+
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
@@ -82,6 +89,10 @@ void GuiManager::GuiUpdate(void)
 
 	ImGui::SameLine();
 
+	if (_systems->GetInput()->GetKeyboard()->Press(DIK_1))
+	{
+		ImGui::Text("1");
+	}
 
 	EndFrame();
 #endif

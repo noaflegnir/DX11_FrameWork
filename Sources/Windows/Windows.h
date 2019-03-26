@@ -37,7 +37,8 @@ public:
 	MSG       GetMsg(void) { return _msg; }	// MSG
 	HINSTANCE GetHInstance(void) { return _hInstance; }	// HINSTANCE
 
-	Graphics* GetGraphics(void) { return _graphics; }
+	inline Graphics* GetGraphics(void) { return _graphics; }
+	inline Systems*	 GetSystems(void)  { return _systems; }
 
 	/* @brief	‰Šú‰»
 	 * @param	(Instance) ƒnƒ“ƒhƒ‹

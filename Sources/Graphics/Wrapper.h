@@ -7,6 +7,7 @@
 #pragma once
 #include "../Define/Define.h"
 #include "../Windows/Windows.h"
+#include "../Systems/ModelLoader/PMXLoader/PMXLoader.h"
 
 class Wrapper {
 
@@ -45,4 +46,14 @@ public:
 	virtual void	ReleaseTexture(int texnum) = 0;
 	/* @brief	テクスチャのサイズ取得	*/
 	virtual VECTOR2 GetTextureSize(int num) = 0;
+
+	/* @brief	PMXモデルローダー群 (proto type)	*/
+
+
+	virtual HRESULT LoadpmxModel(PMXModelData& data, const wstring& file) = 0;
+	virtual void ReleasepmxModel() = 0;
+	virtual void SetPMXModelData(PMXModelData data, int i) = 0;
+
+
+	virtual void GuiUpdate(){}
 };
