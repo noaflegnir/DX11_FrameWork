@@ -118,6 +118,18 @@
     <ClCompile Include="..\Sources\Systems\ModelLoader\PMXLoader\PMXLoader.cpp">
       <Filter>FrameWork\Systems\Model\PMXModel</Filter>
     </ClCompile>
+    <ClCompile Include="..\Sources\Define\Matrix.cpp">
+      <Filter>FrameWork\Define</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Scene\SceneManager.cpp">
+      <Filter>FrameWork\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Scene\BaseScene.cpp">
+      <Filter>FrameWork\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Define\Vector.cpp">
+      <Filter>FrameWork\Define</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Sources\Define\Define.h">
@@ -233,6 +245,15 @@
     </ClInclude>
     <ClInclude Include="..\Sources\ModelResource.h">
       <Filter>FrameWork</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Define\Matrix.h">
+      <Filter>FrameWork\Define</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Scene\SceneManager.h">
+      <Filter>FrameWork\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Scene\BaseScene.h">
+      <Filter>FrameWork\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

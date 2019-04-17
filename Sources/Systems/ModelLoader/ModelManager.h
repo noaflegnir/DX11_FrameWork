@@ -24,6 +24,9 @@ public:
 	void Draw();
 
 private:
+
+	bool _pmxEnable; //! pmxを使用するか falseでロードしない　trueでオールロード
+
 	Systems* _systems;
 	PMXLoader* _pmx;
 

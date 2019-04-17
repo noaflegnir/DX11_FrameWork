@@ -26,13 +26,13 @@ HRESULT PMXLoader::Load()
 				// ラッパーからロードを呼び出して回す
 				wstring path(_modRes->PMXModelFilePath[i].begin(), _modRes->PMXModelFilePath[i].end());
 				HRESULT hr = S_OK;
-				//hr = wrapper_->LoadpmxModel(data, path);
+
 				if (FAILED(hr))
 				{
 					MessageBox(_systems->GetWindow()->GetHWND(), ".pmxのロードに失敗", "エラー", MB_OK);
 					return hr;
 				}
-				// ロードしたpmxのデータをwrapperにぶち込む
+				// ロードして変数にぶち込む
 				//wrapper_->SetPMXModelData(data, i);
 			}
 		}

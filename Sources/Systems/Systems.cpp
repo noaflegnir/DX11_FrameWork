@@ -34,16 +34,7 @@ void Systems::Uninit(void)
 {
 	// forを逆からデクリで各マネージャ内部を解放していく
 	// 後処理 重要なのを最後に？
-	//for (int i = (int)SYSTEM_NUM::MAX - 1; i >= 0; --i)
-	//{
-	//	if (_manager[i])
-	//	{
-	//		_manager[i]->Uninit();
-	//		DeleteThis(_manager[i]);
-	//	}
-	//}
-
-	for (int i = 0;i < (int)SYSTEM_NUM::MAX;i++)
+	for (int i = (int)SYSTEM_NUM::MAX - 1; i >= 0; --i)
 	{
 		if (_manager[i])
 		{
@@ -51,6 +42,15 @@ void Systems::Uninit(void)
 			DeleteThis(_manager[i]);
 		}
 	}
+
+	//for (int i = 0;i < (int)SYSTEM_NUM::MAX;i++)
+	//{
+	//	if (_manager[i])
+	//	{
+	//		_manager[i]->Uninit();
+	//		DeleteThis(_manager[i]);
+	//	}
+	//}
 }
 
 

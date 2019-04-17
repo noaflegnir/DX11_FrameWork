@@ -12,10 +12,15 @@
 #include <array>
 #include <fstream>
 #include "Vector.h"
+#include "Matrix.h"
 
 using std::string;
 using std::ifstream;
 using std::wstring;
+
+typedef unsigned int uint;
+typedef unsigned short ushort;
+typedef unsigned un;
 
 template<typename Num>
 inline Num Hf(Num n) { return (Num)(n * 0.5f); };

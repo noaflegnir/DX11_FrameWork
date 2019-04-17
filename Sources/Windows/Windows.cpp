@@ -141,7 +141,7 @@ void Windows::SetWindowParam(void)
 	
 	RegisterClassEx(&_wcex);
 
-	//UnregisterClass(_T("ImGui Example"), _wcex.hInstance);
+	UnregisterClass(_T("ImGui Example"), _wcex.hInstance);
 }
 
 // ウィンドウの生成

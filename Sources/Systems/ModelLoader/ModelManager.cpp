@@ -3,8 +3,9 @@
 
 
 ModelManager::ModelManager(Systems* systems)
-	: _systems	(systems)
-	, _pmx		(nullptr)
+	: _systems	 (systems)
+	, _pmx		 (nullptr)
+	, _pmxEnable (false)
 {
 }
 
@@ -19,17 +20,20 @@ HRESULT ModelManager::Init()
 	_pmx = new PMXLoader(_systems);
 	if (!_pmx)
 	{
-		MessageBox(window_->GetHWND(), "pmxError", "エラー", MB_OK);
+		MessageBox(window_->GetHWND(), "PMXローダーエラー", "エラー", MB_OK);
 		return E_FAIL;
 	}
-	else{ _pmx->Load(); }
+	else if (_pmxEnable)
+	{
+		_pmx->Load();
+	}
 
 	return S_OK;
 }
 
 void ModelManager::Uninit()
 {
-	_pmx->UnLoad();
+	if (_pmxEnable) { _pmx->UnLoad(); }
 	DeleteThis(_pmx);
 }
 

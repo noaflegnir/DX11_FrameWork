@@ -11,6 +11,9 @@
 
 class Wrapper {
 
+protected:
+	MATRIX _inverse; //Viewの逆行列
+
 public:
 
 	struct TextureData
@@ -38,6 +41,7 @@ public:
 	/* @brief	描画終了	*/
 	virtual void EndDraw() = 0;
 
+
 	virtual void SetTexture(int stage, int texNum = -1, int modelNum = -1) = 0;
 
 	/* @brief	テクスチャ読み込み	*/
@@ -47,12 +51,15 @@ public:
 	/* @brief	テクスチャのサイズ取得	*/
 	virtual VECTOR2 GetTextureSize(int num) = 0;
 
+	// ビュー行列の生成
+	virtual MATRIX  CreateViewMatrix(VECTOR3 position, VECTOR3 at, VECTOR3 up) = 0;
+	// プロジェクション行列の生成
+	//virtual MATRIX  CreateProjectionMatrix(int fov, float aspect, float camera_near, float camera_far) = 0;
+
 	/* @brief	PMXモデルローダー群 (proto type)	*/
-
-
 	virtual HRESULT LoadpmxModel(PMXModelData& data, const wstring& file) = 0;
 	virtual void ReleasepmxModel() = 0;
-	virtual void SetPMXModelData(PMXModelData data, int i) = 0;
+	virtual void SetPMXModelData(PMXModelData& data, int i) = 0;
 
 
 	virtual void GuiUpdate(){}

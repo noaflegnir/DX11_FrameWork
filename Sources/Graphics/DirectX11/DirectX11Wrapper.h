@@ -30,6 +30,9 @@ public:
 	/* @brief	描画終了	*/
 	void EndDraw() override;
 
+	/* @brif	ビュー行列の生成	*/
+	MATRIX  CreateViewMatrix(VECTOR3 position, VECTOR3 at, VECTOR3 up);
+
 	void SetTexture(int stage, int texNum = -1, int modelNum = -1) override;
 
 	/* @brief	テクスチャ読み込み	*/
@@ -44,13 +47,30 @@ public:
 	void ReleasepmxModel() override;
 
 
+	inline XMMATRIX    XM(const MATRIX&  m)
+	{
+		XMMATRIX temp;
+		for (int i = 0; i < 4; ++i) { for (int j = 0; j < 4; ++j) { temp.r[i].m128_f32[j] = m.m[i][j]; } }
+		return temp;
+	}
+	inline XMVECTORF32 XM(const VECTOR3& v) { XMVECTORF32 temp = { v.x, v.y, v.z, 1 }; return temp; }
+
+	inline MATRIX  V(const XMMATRIX&    m)
+	{
+		MATRIX temp;
+		for (int i = 0; i < 4; ++i) { for (int j = 0; j < 4; ++j) { temp.m[i][j] = m.r[i].m128_f32[j]; } }
+		return temp;
+	}
+	inline VECTOR3 V(const XMVECTORF32& v) { return VECTOR3(v.f[0], v.f[1], v.f[2]); }
+
+
 private:
 
 	// pmx関係
 	HRESULT GetPMXStringUTF16(ifstream& file, wstring& output);
 	bool LoadPMX(PMXModelData& data, const wstring& file);
 
-	void SetPMXModelData(PMXModelData data, int i) override;
+	void SetPMXModelData(PMXModelData& data, int i) override;
 
 	// DirectX11のテクスチャ情報
 	struct DX11Texture : public TextureData

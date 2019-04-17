@@ -104,50 +104,49 @@ public:
 
 };
 
-//struct VECTOR3
-//{
-//public:
-//	float x, y, z;
-//
-//	/* @brief	コンストラクタ		*/
-//	VECTOR3(void): x(0), y(0), z(0){}
-//
-//	/* @brief	コンストラクタ
-//	* @param	(f)		初期化値	*/
-//	VECTOR3(float f);
-//
-//	/* @brief	コンストラクタ
-//	* @param	(x)		xの初期化値
-//	* @param	(y)		yの初期化値
-//	* @param	(z)		zの初期化値	*/
-//	VECTOR3(const float x, const float y, const float z);
-//
-//	template<class T1, class T2, class T3>
-//	VECTOR3(const T1 x, const T2 y, const T3 z) : x(static_cast<float>(x)), y(static_cast<float>(y)), z(static_cast<float>(z)) {}
-//
-//	// 演算子のオーバーロード
-//	VECTOR3& operator = (const VECTOR2& v);
-//
-//	VECTOR3& operator += (const VECTOR3& v);
-//	VECTOR3& operator -= (const VECTOR3& v);
-//	VECTOR3& operator *= (float f);
-//	VECTOR3& operator /= (float f);
-//
-//	VECTOR3& operator + (void);
-//	VECTOR3& operator - (void);
-//
-//	VECTOR3 operator + (const VECTOR3& v) const;
-//	VECTOR3 operator - (const VECTOR3& v) const;
-//	VECTOR3 operator * (float f) const;
-//	VECTOR3 operator * (const VECTOR3& v) const;
-//	VECTOR3 operator / (float f) const;
-//	VECTOR3 operator / (const VECTOR3& v) const;
-//
-//	bool operator == (const VECTOR3& v);
-//	bool operator != (float f);
-//	bool operator != (const VECTOR3& v);
-//	bool operator != (std::nullptr_t t)const;
-//
-//	operator float*(void) { return &x; }
-//};
-//
+struct VECTOR3
+{
+public:
+	float x, y, z;
+
+	/* @brief	コンストラクタ		*/
+	VECTOR3();
+
+	/* @brief	コンストラクタ
+	* @param	(f)		初期化値	*/
+	VECTOR3(float f);
+
+	/* @brief	コンストラクタ
+	* @param	(x)		xの初期化値
+	* @param	(y)		yの初期化値
+	* @param	(z)		zの初期化値	*/
+	VECTOR3(const float x, const float y, const float z);
+
+	template<class T1, class T2, class T3>
+	VECTOR3(const T1 x, const T2 y, const T3 z) : x(static_cast<float>(x)), y(static_cast<float>(y)), z(static_cast<float>(z)) {}
+
+	// 演算子のオーバーロード
+	VECTOR3& operator = (const VECTOR2& v);
+
+	VECTOR3& operator += (const VECTOR3& v);
+	VECTOR3& operator -= (const VECTOR3& v);
+	VECTOR3& operator *= (float f);
+	VECTOR3& operator /= (float f);
+
+	VECTOR3& operator + ();
+	VECTOR3& operator - ();
+
+	VECTOR3 operator + (const VECTOR3& v) const;
+	VECTOR3 operator - (const VECTOR3& v) const;
+	VECTOR3 operator * (float f) const;
+	VECTOR3 operator * (const VECTOR3& v) const;
+	VECTOR3 operator / (float f) const;
+	VECTOR3 operator / (const VECTOR3& v) const;
+
+	bool operator == (const VECTOR3& v);
+	bool operator != (float f);
+	bool operator != (const VECTOR3& v);
+	bool operator != (std::nullptr_t t)const;
+
+	operator float*() { return &x; }
+};

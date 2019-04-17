@@ -17,7 +17,7 @@ class TextureManager : public Interface {
 	friend Systems;
 
 public:
-	~TextureManager(){}
+	~TextureManager();
 
 
 private:

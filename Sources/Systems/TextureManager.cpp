@@ -3,9 +3,17 @@
 #include "BaseManager.h"
 
 
+
+
 TextureManager::TextureManager(Systems* systems)
 	: Interface (systems)
 {
+}
+
+TextureManager::~TextureManager()
+{
+	Unload();
+	DeleteThis(_texRes);
 }
 
 HRESULT TextureManager::Init()
@@ -18,9 +26,6 @@ HRESULT TextureManager::Init()
 
 void TextureManager::Uninit()
 {
-	Unload();
-
-	DeleteThis(_texRes);
 }
 
 HRESULT TextureManager::Load()

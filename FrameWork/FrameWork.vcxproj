@@ -157,10 +157,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Sources\Define\Matrix.cpp" />
+    <ClCompile Include="..\Sources\Define\Vector.cpp" />
     <ClCompile Include="..\Sources\Graphics\DirectX11\DirectX11.cpp" />
     <ClCompile Include="..\Sources\Graphics\DirectX11\DirectX11Wrapper.cpp" />
     <ClCompile Include="..\Sources\Graphics\DirectX11\WICTextureLoader.cpp" />
     <ClCompile Include="..\Sources\Main.cpp" />
+    <ClCompile Include="..\Sources\Scene\BaseScene.cpp" />
+    <ClCompile Include="..\Sources\Scene\SceneManager.cpp" />
     <ClCompile Include="..\Sources\Systems\Debug\Debug.cpp" />
     <ClCompile Include="..\Sources\Systems\Debug\Gui.cpp" />
     <ClCompile Include="..\Sources\Systems\Debug\GuiManager.cpp" />
@@ -184,6 +188,7 @@
   <ItemGroup>
     <ClInclude Include="..\Sources\Define\Color.h" />
     <ClInclude Include="..\Sources\Define\Define.h" />
+    <ClInclude Include="..\Sources\Define\Matrix.h" />
     <ClInclude Include="..\Sources\Define\Vector.h" />
     <ClInclude Include="..\Sources\Graphics\DirectX11\DirectX11.h" />
     <ClInclude Include="..\Sources\Graphics\DirectX11\DirectX11Include.h" />
@@ -192,6 +197,8 @@
     <ClInclude Include="..\Sources\Graphics\Graphics.h" />
     <ClInclude Include="..\Sources\Graphics\Wrapper.h" />
     <ClInclude Include="..\Sources\ModelResource.h" />
+    <ClInclude Include="..\Sources\Scene\BaseScene.h" />
+    <ClInclude Include="..\Sources\Scene\SceneManager.h" />
     <ClInclude Include="..\Sources\Systems\BaseManager.h" />
     <ClInclude Include="..\Sources\Systems\Debug\Debug.h" />
     <ClInclude Include="..\Sources\Systems\Debug\Gui.h" />

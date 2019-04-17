@@ -44,6 +44,16 @@ void DX11Wrapper::EndDraw()
 {
 }
 
+MATRIX DX11Wrapper::CreateViewMatrix(VECTOR3 position, VECTOR3 at, VECTOR3 up)
+{
+	XMMATRIX Xtemp = XMMatrixLookAtLH(XM(position), XM(at), XM(up));
+
+	MATRIX temp = V(Xtemp);
+	_inverse.Billboard(temp);
+
+	return temp;
+}
+
 void DX11Wrapper::SetTexture(int stage, int texNum, int modelNum)
 {
 	const auto& context_ = _directX11->GetDeviceContext();
@@ -139,10 +149,15 @@ HRESULT DX11Wrapper::GetPMXStringUTF16(ifstream& file, wstring& output)
 	return S_OK;
 }
 
+//UTF-8非対応　Ver2.0のみ
 bool DX11Wrapper::LoadPMX(PMXModelData& data, const wstring& file)
 {
 	// 中身が空ではないか
-	if (file.empty()) { return false; }
+	if (file.empty())
+	{
+		MessageBox(_directX11->GetWindow()->GetHWND(), "中身が空です", "エラー", MB_OK);
+		return false;
+	}
 
 	// モデルファイルのパスからモデルフォルダのパスを抽出
 	std::wstring folderPath{ file.begin(), file.begin() + file.rfind(L'\\') + 1 };
@@ -191,6 +206,8 @@ bool DX11Wrapper::LoadPMX(PMXModelData& data, const wstring& file)
 	if (!XMScalarNearEqual(version, 2.0f, g_XMEpsilon.f[0]))
 	{
 		pmxFile.close();
+
+		MessageBox(_directX11->GetWindow()->GetHWND(), "Ver2.0以外は非対応です", "エラー", MB_OK);
 		return false;
 	}
 
@@ -209,6 +226,8 @@ bool DX11Wrapper::LoadPMX(PMXModelData& data, const wstring& file)
 	if (hederData[0] != 0)
 	{
 		pmxFile.close();
+
+		MessageBox(_directX11->GetWindow()->GetHWND(), "UTF-8は非対応です", "エラー", MB_OK);
 		return false;
 	}
 
@@ -488,10 +507,13 @@ bool DX11Wrapper::LoadPMX(PMXModelData& data, const wstring& file)
 
 	pmxFile.close();
 
+	// セット
+	SetPMXModelData(data, 0);
+
 	return true;
 }
 
-void DX11Wrapper::SetPMXModelData(PMXModelData data, int i)
+void DX11Wrapper::SetPMXModelData(PMXModelData& data, int i)
 {
 	_pmxData[i] = data;
 }

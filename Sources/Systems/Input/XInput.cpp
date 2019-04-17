@@ -1,5 +1,4 @@
 #include "XInput.h"
-#include "Controller.h"
 #include "KeyInput.h"
 
 XInput::XInput(Input* input)
