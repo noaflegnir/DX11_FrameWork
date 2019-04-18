@@ -8,22 +8,41 @@ DX11Wrapper::DX11Wrapper(DirectX11* directX)
 {
 }
 
-HRESULT DX11Wrapper::Init()
+void DX11Wrapper::Init()
 {
-	return E_NOTIMPL;
+	const auto& device_ = _directX11->GetDevice();
+
+
+	// 深度ステンシルの設定
+	D3D11_DEPTH_STENCIL_DESC depthDesc_;
+	ZeroMemory(&depthDesc_, sizeof(depthDesc_));
+	depthDesc_.DepthEnable = false;
+	depthDesc_.DepthWriteMask = D3D11_DEPTH_WRITE_MASK::D3D11_DEPTH_WRITE_MASK_ALL;
+	depthDesc_.DepthFunc = D3D11_COMPARISON_LESS;
+	device_->CreateDepthStencilState(&depthDesc_, &_depthState);
+
+
+	// ラスタライザステートの設定
+	D3D11_RASTERIZER_DESC rdc_;
+	ZeroMemory(&rdc_, sizeof(rdc_));
+	rdc_.CullMode = D3D11_CULL_BACK;
+	rdc_.FillMode = D3D11_FILL_SOLID;
+
+	device_->CreateRasterizerState(&rdc_, &_rasterizerState);
 }
 
 void DX11Wrapper::Uninit()
 {
-
+	ReleaseThis(_depthState);
+	ReleaseThis(_rasterizerState);
 }
 
-unsigned int DX11Wrapper::CreateVertexBuffer(const void * vertex, unsigned int size, unsigned int num)
+uint DX11Wrapper::CreateVertexBuffer(const void* vertex, uint size, uint num)
 {
 	return 0;
 }
 
-unsigned int DX11Wrapper::CreateIndexBuffer(const WORD * vertex, unsigned int num)
+unsigned int DX11Wrapper::CreateIndexBuffer(const WORD* vertex, unsigned int num)
 {
 	return 0;
 }
@@ -34,10 +53,57 @@ void DX11Wrapper::ReleaseBuffer(unsigned int num)
 
 void DX11Wrapper::BeginDrawCanvas()
 {
+	const auto& context_ = _directX11->GetDeviceContext();
+	if (!context_) { return; }
+
+	// 頂点インプットレイアウトをセット
+	context_->IASetInputLayout(_vertexShader[0].layout);
+
+	//ラスタライザステートをセット
+	context_->RSSetState(_rasterizerState);
+
+	// アルファブレンドをセット
+	float blend_[] = {0.0f, 0.0f, 0.0f, 0.0f};
+	context_->OMSetBlendState(0, blend_, 0xffffffff);
+
+	// 深度ステンシルの設定
+	context_->OMSetDepthStencilState(_depthState, 1);
+
+	// スクリーン座標の設定
+	const auto& constant_ = _constantBuffer[_shader[0]._constantBuffer[0]];
+	VECTOR4 screen_ = VECTOR4((float)Graphics::WIDTH, (float)Graphics::HEIGHT, 0, 0);
+	context_->UpdateSubresource(constant_, 0, NULL, &screen_, 0, 0);
+	context_->VSSetConstantBuffers(0, 1, &constant_);
+	context_->GSSetShader(NULL, NULL, 0);
 }
 
+// カメラないから未完成
 void DX11Wrapper::BeginDrawObject()
 {
+	const auto& context_ = _directX11->GetDeviceContext();
+	if (!context_) { return; }
+
+	// 頂点インプットレイアウトをセット
+	context_->IASetInputLayout(_vertexShader[1].layout);
+
+	// ラスタライザステートをセット
+	context_->RSSetState(_rasterizerState);
+
+	// アルファブレンドのセット
+	float blend_[] = { 0.0f, 0.0f, 0.0f, 0.0f };
+	// ステートが0がデフォルト
+	context_->OMSetBlendState(0, blend_, 0xffffffff);
+
+	SHADER_SCENE ss;
+	MATRIX v,p;
+	//const auto& cameraManager = _directX11->GetWindow()->GetSystems()-
+	// カメラマネージャからもらう
+	ss._view = v;
+	ss._proj = p;
+
+	const auto& constant_ = _constantBuffer[_shader[1]._constantBuffer[0]];
+	context_->VSSetConstantBuffers(0, 1, &constant_);
+	context_->UpdateSubresource(constant_, 0, NULL, &ss, 0, 0);
 }
 
 void DX11Wrapper::EndDraw()
@@ -52,6 +118,14 @@ MATRIX DX11Wrapper::CreateViewMatrix(VECTOR3 position, VECTOR3 at, VECTOR3 up)
 	_inverse.Billboard(temp);
 
 	return temp;
+}
+
+MATRIX DX11Wrapper::CreateProjectionMatrix(int fov, float aspect, float camera_near, float camera_far)
+{
+	XMMATRIX temp;
+	temp = XMMatrixPerspectiveFovLH((XMConvertToRadians((float)fov)), aspect, camera_near, camera_far);
+
+	return V(temp);
 }
 
 void DX11Wrapper::SetTexture(int stage, int texNum, int modelNum)

@@ -47,6 +47,9 @@
     <Filter Include="FrameWork\Systems\Model\PMXModel">
       <UniqueIdentifier>{5e640553-0ae1-4345-b2c7-e25da34a328c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FrameWork\Systems\Camera">
+      <UniqueIdentifier>{bf20d7ec-31e1-428b-93e3-18b601cf5d51}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Sources\Main.cpp">
@@ -129,6 +132,12 @@
     </ClCompile>
     <ClCompile Include="..\Sources\Define\Vector.cpp">
       <Filter>FrameWork\Define</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Systems\Camera\Camera.cpp">
+      <Filter>FrameWork\Systems\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Systems\Camera\CameraManager.cpp">
+      <Filter>FrameWork\Systems\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -254,6 +263,12 @@
     </ClInclude>
     <ClInclude Include="..\Sources\Scene\BaseScene.h">
       <Filter>FrameWork\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Systems\Camera\Camera.h">
+      <Filter>FrameWork\Systems\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Systems\Camera\CameraManager.h">
+      <Filter>FrameWork\Systems\Camera</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

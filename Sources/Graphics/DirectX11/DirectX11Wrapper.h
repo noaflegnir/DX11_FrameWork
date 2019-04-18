@@ -18,7 +18,7 @@ class DX11Wrapper : public Wrapper {
 	friend DirectX11;
 
 public:
-	unsigned int CreateVertexBuffer(const void* vertex, unsigned int size, unsigned int num) override;
+	uint CreateVertexBuffer(const void* vertex, uint size, uint num) override;
 	unsigned int CreateIndexBuffer(const WORD* vertex, unsigned int num) override;
 	void ReleaseBuffer(unsigned int num) override; //@ FVF fvf
 
@@ -32,6 +32,7 @@ public:
 
 	/* @brif	ビュー行列の生成	*/
 	MATRIX  CreateViewMatrix(VECTOR3 position, VECTOR3 at, VECTOR3 up);
+	MATRIX  CreateProjectionMatrix(int fov, float aspect, float camera_near, float camera_far);
 
 	void SetTexture(int stage, int texNum = -1, int modelNum = -1) override;
 
@@ -72,22 +73,62 @@ private:
 
 	void SetPMXModelData(PMXModelData& data, int i) override;
 
+	struct SHADER_SCENE
+	{
+		MATRIX _view;
+		MATRIX _proj;
+	};
 	// DirectX11のテクスチャ情報
 	struct DX11Texture : public TextureData
 	{
 		ID3D11ShaderResourceView* _srv;
 	};
+	// DirectX11の頂点シェーダー
+	struct VertexShader
+	{
+		ID3D11VertexShader* shader;
+		ID3D11InputLayout*  layout;
+	};
+	// DirectX11のピクセルシェーダー
+	struct PixelShader
+	{
+		ID3D11PixelShader*	shader;
+		ID3D11SamplerState* sampler;
+	};
+
+	struct Shader
+	{
+		std::vector<uint> _vertexShader;
+		std::vector<uint> _pixelShader;
+		std::vector<uint> _constantBuffer;
+	};
 
 	DX11Wrapper(DirectX11* directX11);
 	~DX11Wrapper() {}
 
-	HRESULT Init() override;
+	void Init()   override;
 	void Uninit() override;
 
 	DirectX11* _directX11;
 
+
+	ID3D11DepthStencilState*   _depthState;
+	ID3D11RasterizerState*     _rasterizerState;
+
+
+	std::vector<VertexShader>  _vertexShader;
+	std::vector<PixelShader>   _pixelShader;
+	std::vector<ID3D11GeometryShader> _geometryShader;
+	// シェーダとのデータのやりとりをするやつ
+	std::vector<ID3D11Buffer*> _constantBuffer;
+
+	// CanvasとObjectの2つ
+	Shader _shader[2];
+
+
 	DX11Texture _texture[TextureResource::MAX];
 	std::vector<std::vector<DX11Texture>>	texture_;
 
+	
 	PMXModelData _pmxData[ModelResource::MAX]{};
 };

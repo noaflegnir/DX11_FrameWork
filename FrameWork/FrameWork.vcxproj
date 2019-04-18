@@ -165,6 +165,8 @@
     <ClCompile Include="..\Sources\Main.cpp" />
     <ClCompile Include="..\Sources\Scene\BaseScene.cpp" />
     <ClCompile Include="..\Sources\Scene\SceneManager.cpp" />
+    <ClCompile Include="..\Sources\Systems\Camera\Camera.cpp" />
+    <ClCompile Include="..\Sources\Systems\Camera\CameraManager.cpp" />
     <ClCompile Include="..\Sources\Systems\Debug\Debug.cpp" />
     <ClCompile Include="..\Sources\Systems\Debug\Gui.cpp" />
     <ClCompile Include="..\Sources\Systems\Debug\GuiManager.cpp" />
@@ -200,6 +202,8 @@
     <ClInclude Include="..\Sources\Scene\BaseScene.h" />
     <ClInclude Include="..\Sources\Scene\SceneManager.h" />
     <ClInclude Include="..\Sources\Systems\BaseManager.h" />
+    <ClInclude Include="..\Sources\Systems\Camera\Camera.h" />
+    <ClInclude Include="..\Sources\Systems\Camera\CameraManager.h" />
     <ClInclude Include="..\Sources\Systems\Debug\Debug.h" />
     <ClInclude Include="..\Sources\Systems\Debug\Gui.h" />
     <ClInclude Include="..\Sources\Systems\Debug\GuiManager.h" />

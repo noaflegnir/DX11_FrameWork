@@ -150,3 +150,31 @@ public:
 
 	operator float*() { return &x; }
 };
+
+struct VECTOR4
+{
+public:
+	float x, y, z, w;
+
+	// コンストラクタ
+	VECTOR4(void);
+	VECTOR4(float f);
+	VECTOR4(float x, float y, float z, float w);
+
+	// 演算子のオーバーロード
+	VECTOR4& operator += (const VECTOR4& v);
+	VECTOR4& operator -= (const VECTOR4& v);
+	VECTOR4& operator *= (float f);
+	VECTOR4& operator /= (float f);
+
+	VECTOR4& operator + (void);
+	VECTOR4& operator - (void);
+	VECTOR4 operator + (const VECTOR4& v) const;
+	VECTOR4 operator - (const VECTOR4& v) const;
+	VECTOR4 operator * (float f) const;
+	VECTOR4 operator / (float f) const;
+
+	bool operator == (const VECTOR4& v);
+	bool operator != (const VECTOR4& v);
+	bool operator != (std::nullptr_t t)const;
+};
