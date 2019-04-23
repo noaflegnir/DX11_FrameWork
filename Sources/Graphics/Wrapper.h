@@ -16,6 +16,8 @@ protected:
 
 public:
 
+	static constexpr uint E_ERROR = UINT_MAX;
+
 	struct TextureData
 	{
 		VECTOR2 size;
@@ -55,6 +57,18 @@ public:
 	virtual MATRIX  CreateViewMatrix(VECTOR3 position, VECTOR3 at, VECTOR3 up) = 0;
 	// プロジェクション行列の生成
 	virtual MATRIX  CreateProjectionMatrix(int fov, float aspect, float camera_near, float camera_far) = 0;
+
+	/* @brief	頂点シェーダー作成			*/
+	virtual uint CreateVertexShader(string filename, string met, string ver, void* t, uint ele) = 0;
+	/* @brief	ピクセルシェーダー作成		*/
+	virtual uint CreatePixelShader(string filename, string met, string ver) = 0;
+	/* @brief	ジオメトリシェーダー作成	*/
+	virtual uint CreateGeometryShader(string filename, string met, string ver) = 0;
+	/* @brief	コンピュートシェーダー作成	*/
+	virtual uint CreateComputeShader(string filename, string met, string ver, const void* v, uint size, uint num) = 0;
+
+	/* @brief	コンスタントバッファ作成	*/
+	virtual uint CreateConstantBuffer(uint size) = 0;
 
 	/* @brief	PMXモデルローダー群 (proto type)	*/
 	virtual HRESULT LoadpmxModel(PMXModelData& data, const wstring& file) = 0;

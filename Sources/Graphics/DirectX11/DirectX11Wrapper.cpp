@@ -3,6 +3,8 @@
 #include <D3DX11tex.h>
 
 
+
+
 DX11Wrapper::DX11Wrapper(DirectX11* directX)
 	: _directX11 (directX)
 {
@@ -11,6 +13,44 @@ DX11Wrapper::DX11Wrapper(DirectX11* directX)
 void DX11Wrapper::Init()
 {
 	const auto& device_ = _directX11->GetDevice();
+
+#ifdef _DEBUG
+	string directory = "../Resource/Shader/";
+#else
+	string directory = "./Resource/Shader/";
+#endif
+
+	// 頂点インプットレイアウト
+	D3D11_INPUT_ELEMENT_DESC lay_[] =
+	{
+		{ "POSITION", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0,  0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "COLOR"   , 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 16, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT      , 0, 32, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+	};
+
+	// 2D UI系
+	//_shader[0]._vertexShader.emplace_back(this->CreateVertexShader(directory + "UI.hlsl", "VS_Main", "vs_5_0", &lay_[0], sizeof(lay_) / sizeof(lay_[0])));
+	//_shader[0]._pixelShader.emplace_back(this->CreatePixelShader(directory + "UI.hlsl", "PS_Main", "ps_5_0"));
+	//_shader[0]._pixelShader.emplace_back(this->CreatePixelShader(directory+ "UI.hlsl", "PS_NotTexture", "ps_5_0"));
+	//_shader[0]._constantBuffer.emplace_back(this->CreateConstantBuffer(sizeof(VECTOR4)));
+
+	// 頂点インプットレイアウト
+	D3D11_INPUT_ELEMENT_DESC layout[] =
+	{
+		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT   , 0,  0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "NORMAL"  , 0, DXGI_FORMAT_R32G32B32_FLOAT   , 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "TANGENT" , 0, DXGI_FORMAT_R32G32B32_FLOAT   , 0, 24, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "COLOR"   , 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 36, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT      , 0, 52, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "TEXCOORD", 1, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 60, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "TEXCOORD", 2, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 76, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+	};
+
+	//_shader[1]._vertexShader.emplace_back(this->CreateVertexShader(directory + "Default.hlsl", "VS_MeshMain", "vs_5_0", &layout[0], sizeof(layout) / sizeof(layout[0])));
+	//_shader[1]._vertexShader.emplace_back(this->CreateVertexShader(directory + "Default.hlsl", "VS_SpriteMain", "vs_5_0", &layout[0], sizeof(layout) / sizeof(layout[0])));
+	//_shader[1]._pixelShader.emplace_back(this->CreatePixelShader(directory + "Default.hlsl", "PS_Main", "ps_5_0"));
+	//shader_[1].constantBuffer.emplace_back(this->CreateConstantBuffer(sizeof(SHADER_DEFAULT_SCENE)));
+	//shader_[1].constantBuffer.emplace_back(this->CreateConstantBuffer(sizeof(SHADER_DEFAULT_OBJECT)));
 
 
 	// 深度ステンシルの設定
@@ -33,13 +73,73 @@ void DX11Wrapper::Init()
 
 void DX11Wrapper::Uninit()
 {
+	for (int i = 0; i < (int)_vertexBuffer.size();)
+	{
+		ReleaseThis(_vertexBuffer[i]._buffer);
+		if (_vertexBuffer[i]._buffer = nullptr)
+		{
+			auto& tmp_b = _vertexBuffer;
+			auto& p	= _vertexBuffer[i];
+		}
+	}
+
 	ReleaseThis(_depthState);
 	ReleaseThis(_rasterizerState);
 }
 
+uint DX11Wrapper::InsideBuffer()
+{
+	int size = (int)_vertexBuffer.size();
+	for (int i = 0; i < size; i++)
+	{
+		if (!_vertexBuffer[i]._buffer)
+		{
+			return i;
+		}
+	}
+
+	return E_ERROR; //エラー
+}
+
 uint DX11Wrapper::CreateVertexBuffer(const void* vertex, uint size, uint num)
 {
-	return 0;
+	VertexBuffer* tmp_ = nullptr;
+	uint inside_ = InsideBuffer();
+	if (inside_ != 0x0ffffffff) { tmp_ = &_vertexBuffer[inside_]; }
+	else { tmp_ = new VertexBuffer; }
+	
+	D3D11_BUFFER_DESC bd_;
+	bd_.Usage = D3D11_USAGE_DEFAULT;
+	bd_.ByteWidth = size * num;
+	bd_.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	bd_.CPUAccessFlags = 0;
+	bd_.MiscFlags = 0;
+
+	D3D11_SUBRESOURCE_DATA data_;
+	data_.pSysMem = vertex;
+	data_.SysMemPitch = 0;
+	data_.SysMemSlicePitch = 0;
+
+	const auto& device_ = _directX11->GetDevice();
+	HRESULT hr = device_->CreateBuffer(&bd_, &data_, &tmp_->_buffer);
+	if (FAILED(hr))
+	{
+		ReleaseThis(tmp_->_buffer);
+		return E_ERROR; // エラー
+	}
+	tmp_->_stride = size;
+	tmp_->_offset = 0;
+
+	if (inside_ != 0x0ffffffff)
+	{
+		_vertexBuffer[inside_] = *tmp_;
+		return inside_;
+	}
+
+	// 末尾に追加する
+	_vertexBuffer.emplace_back(*tmp_);
+	delete tmp_;
+	return (uint)_vertexBuffer.size() - 1;
 }
 
 unsigned int DX11Wrapper::CreateIndexBuffer(const WORD* vertex, unsigned int num)
@@ -194,6 +294,221 @@ void DX11Wrapper::ReleaseTexture(int texnum)
 VECTOR2 DX11Wrapper::GetTextureSize(int num)
 {
 	return VECTOR2();
+}
+
+ID3DBlob* DX11Wrapper::CompiledShader(string filename, string met, string ver)
+{
+	// hlslの読み込み　ブロブは各シェーダーの原型？みたいなやつらしい
+	ID3DBlob* cmpShader_ = nullptr;
+	ID3DBlob* error_ = nullptr;
+
+	// 頂点シェーダー作成
+	HRESULT hr = D3DX11CompileFromFile(filename.c_str(), NULL, NULL, met.c_str(), ver.c_str(), 0, 0, NULL, &cmpShader_, &error_, NULL);
+	if (FAILED(hr))
+	{ 
+		MessageBox(_directX11->GetWindow()->GetHWND(), (filename + met).c_str(), "エラー", MB_OK);
+		OutputDebugStringA((const char*)error_->GetBufferPointer());
+		__debugbreak();
+		return nullptr;
+	}
+	ReleaseThis(error_);
+
+	return cmpShader_;
+
+}
+
+uint DX11Wrapper::CreateVertexShader(string filename, string met, string ver, void* t, uint ele)
+{
+	if (ver != "vs_5_0") { return 0; }
+
+	const auto& device_ = _directX11->GetDevice();
+	HRESULT hr;
+	VertexShader tmpShader_;
+
+	ID3DBlob* cmpShader_ = CompiledShader(filename, met, ver);
+	if (!cmpShader_) { return E_ERROR; }
+
+	hr = device_->CreateVertexShader(cmpShader_->GetBufferPointer(), cmpShader_->GetBufferSize(), NULL, &tmpShader_.shader);
+	if (FAILED(hr))
+	{
+		MessageBox(_directX11->GetWindow()->GetHWND(), (string(filename + "の頂点シェーダー作成に失敗しました").c_str()), "エラー", MB_OK);
+		__debugbreak();
+		ReleaseThis(cmpShader_);
+		return E_ERROR;
+	}
+
+	hr = device_->CreateInputLayout((D3D11_INPUT_ELEMENT_DESC*)t, ele, cmpShader_->GetBufferPointer(), cmpShader_->GetBufferSize(), &tmpShader_.layout);
+	MessageBox(_directX11->GetWindow()->GetHWND(), (string(filename + "の頂点インプットレイアウト作成に失敗しました").c_str()), "エラー", MB_OK);
+
+	_vertexShader.emplace_back(tmpShader_);
+
+	return (uint)_vertexShader.size() - 1;
+}
+
+uint DX11Wrapper::CreatePixelShader(string filename, string met, string ver)
+{
+	if (ver != "ps_5_0") { return 0; }
+	HRESULT hr;
+	PixelShader tmpPixelShader_;
+
+	const auto& device_ = _directX11->GetDevice();
+
+	ID3DBlob* cmpShader_ = CompiledShader(filename, met, ver);
+	hr = device_->CreatePixelShader(cmpShader_->GetBufferPointer(), cmpShader_->GetBufferSize(), NULL, &tmpPixelShader_.shader);
+	if (FAILED(hr))
+	{
+		MessageBox(_directX11->GetWindow()->GetHWND(), (string(filename + "のピクセルシェーダー作成に失敗しました").c_str()), "エラー", MB_OK);
+		ReleaseThis(cmpShader_);
+		return E_ERROR;
+	}
+	ReleaseThis(cmpShader_);
+
+	// テクスチャ用サンプラーの作成
+	D3D11_SAMPLER_DESC smp_;
+	ZeroMemory(&smp_, sizeof(D3D11_SAMPLER_DESC));
+
+	smp_.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	smp_.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	smp_.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	smp_.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	hr = device_->CreateSamplerState(&smp_, &tmpPixelShader_.sampler);
+	if (FAILED(hr))
+	{
+		MessageBox(_directX11->GetWindow()->GetHWND(), "テクスチャサンプラ作成に失敗しました", "エラー", MB_OK);
+		return E_ERROR;
+	}
+
+	_pixelShader.emplace_back(tmpPixelShader_);
+
+	return (uint)_pixelShader.size() - 1;
+}
+
+uint DX11Wrapper::CreateGeometryShader(string filename, string met, string ver)
+{
+	const auto& _device = _directX11->GetDevice();
+	HRESULT hr;
+	ID3D11GeometryShader* tmpGeometryShader_;
+
+	ID3DBlob* cmpShader_ = CompiledShader(filename, met, ver);
+	if (!cmpShader_) { return E_ERROR; }
+
+	hr = _device->CreateGeometryShader(cmpShader_->GetBufferPointer(), cmpShader_->GetBufferSize(), NULL, &tmpGeometryShader_);
+	if (FAILED(hr))
+	{
+		MessageBox(_directX11->GetWindow()->GetHWND(), "ジオメトリシェーダーの作成に失敗しました", "エラー", MB_OK);
+		ReleaseThis(cmpShader_);
+		return E_ERROR;
+	}
+	ReleaseThis(cmpShader_);
+
+	_geometryShader.emplace_back(tmpGeometryShader_);
+
+	return (uint)_geometryShader.size() - 1;
+}
+
+uint DX11Wrapper::CreateComputeShader(string filename, string met, string ver, const void* v, uint size, uint num)
+{
+	const auto& device_ = _directX11->GetDevice();
+	HRESULT hr;
+	ComputeShader tmpComputeShader_;
+
+	string ex;
+	for (int i = (int)filename.size() - 1; i > 0 && filename[i] != '.'; --i)
+	{
+		ex.insert(ex.begin(), filename[i]);
+	}
+
+	ID3DBlob* cmpShader_ = nullptr;
+	BYTE* byte = nullptr, *temp = nullptr;
+	long s = -1;
+
+	// スキニング計算など
+	if (ex == "cso")
+	{
+		// s = ReadShader(fileame, &temp);
+		byte = temp;
+	}
+	else
+	{
+		cmpShader_ = CompiledShader(filename, met, ver);
+		if (!cmpShader_) { return E_ERROR; }
+
+		byte = (BYTE*)cmpShader_->GetBufferPointer();
+		s = (long)cmpShader_->GetBufferSize();
+	}
+
+	hr = device_->CreateComputeShader(byte, s, NULL, &tmpComputeShader_.shader);
+	if (FAILED(hr))
+	{
+		MessageBox(_directX11->GetWindow()->GetHWND(), "コンピュートシェーダーの作成に失敗しました", "エラー", MB_OK);
+		ReleaseThis(cmpShader_);
+		if (temp) { delete[] temp; }
+		return E_ERROR;
+	}
+	ReleaseThis(cmpShader_);
+	if (temp) { delete[] temp; }
+
+	D3D11_BUFFER_DESC bdesc_;
+	ZeroMemory(&bdesc_, sizeof(bdesc_));
+	bdesc_.ByteWidth = size * num;
+	bdesc_.StructureByteStride = size;
+	bdesc_.Usage = D3D11_USAGE_DEFAULT;
+	bdesc_.BindFlags = D3D11_BIND_UNORDERED_ACCESS | D3D11_BIND_SHADER_RESOURCE;
+	bdesc_.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
+
+	D3D11_SUBRESOURCE_DATA sr_;
+	sr_.pSysMem = v;
+	sr_.SysMemPitch = 0;
+	sr_.SysMemSlicePitch = 0;
+	hr = device_->CreateBuffer(&bdesc_, NULL, &tmpComputeShader_.buffer);
+	if (FAILED(hr)) { return E_ERROR; }
+
+	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc;
+	srvDesc.Format = DXGI_FORMAT_UNKNOWN;
+	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_BUFFEREX;
+	srvDesc.BufferEx.FirstElement = 0;
+	srvDesc.BufferEx.NumElements = bdesc_.ByteWidth / bdesc_.StructureByteStride;
+	srvDesc.BufferEx.Flags = 0;
+	hr = device_->CreateShaderResourceView(tmpComputeShader_.buffer, &srvDesc, &tmpComputeShader_.shaderResource);
+	if (FAILED(hr)) { return E_ERROR; }
+
+	D3D11_UNORDERED_ACCESS_VIEW_DESC uavDesc_;
+	uavDesc_.Format = DXGI_FORMAT_UNKNOWN;
+	uavDesc_.ViewDimension = D3D11_UAV_DIMENSION_BUFFER;
+	uavDesc_.Buffer.FirstElement = 0;
+	uavDesc_.Buffer.NumElements = bdesc_.ByteWidth / bdesc_.StructureByteStride;
+	uavDesc_.Buffer.Flags = 0;
+	hr = device_->CreateUnorderedAccessView(tmpComputeShader_.buffer, &uavDesc_, &tmpComputeShader_.unordereAcces);
+	if (FAILED(hr)) { return E_ERROR; }
+
+	_computeShader.emplace_back(tmpComputeShader_);
+
+	return (uint)_computeShader.size() - 1;
+}
+
+uint DX11Wrapper::CreateConstantBuffer(uint size)
+{
+	const auto& device_ = _directX11->GetDevice();
+
+	D3D11_BUFFER_DESC bd_;
+	bd_.BindFlags			= D3D11_BIND_CONSTANT_BUFFER;
+	bd_.ByteWidth			= size; //16倍数らしい？
+	bd_.Usage				= D3D11_USAGE_DEFAULT;
+	bd_.CPUAccessFlags		= 0;
+	bd_.MiscFlags			= 0;
+	bd_.StructureByteStride = 0;
+
+	ID3D11Buffer* tmp;
+	HRESULT hr = device_->CreateBuffer(&bd_, NULL, &tmp);
+	if (FAILED(hr))
+	{
+		MessageBox(_directX11->GetWindow()->GetHWND(), "コンスタントバッファの作成に失敗しました", "エラー", MB_OK);
+	}
+
+	_constantBuffer.emplace_back(tmp);
+	return (uint)_constantBuffer.size() - 1;
+
+	return uint();
 }
 
 HRESULT DX11Wrapper::LoadpmxModel(PMXModelData& data, const wstring& file)
