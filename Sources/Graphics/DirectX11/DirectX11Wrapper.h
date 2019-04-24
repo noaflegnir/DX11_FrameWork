@@ -42,15 +42,6 @@ public:
 	void ReleaseTexture(int texnum) override;
 	/* @brief	テクスチャのサイズ取得	*/
 	VECTOR2 GetTextureSize(int num) override;
-		
-
-	/* @brief	シェーダー群の作成	*/
-	uint CreateVertexShader(string filename, string met, string ver, void* t, uint ele) override;
-	uint CreatePixelShader(string filename, string met, string ver) override;
-	uint CreateGeometryShader(string filename, string met, string ver) override;
-	uint CreateComputeShader(string filename, string met, string ver, const void* v, uint size, uint num) override;
-
-	uint CreateConstantBuffer(uint size) override;
 
 	/* @brief	pmxファイルの読み込み*/
 	HRESULT LoadpmxModel(PMXModelData& data, const wstring& file) override;
@@ -76,20 +67,11 @@ public:
 
 private:
 
-	/* @brief	シェーダーのコンパイル	*/
-	ID3DBlob* CompiledShader(string filename, string met, string ver);
-
 	// pmx関係
 	HRESULT GetPMXStringUTF16(ifstream& file, wstring& output);
 	bool LoadPMX(PMXModelData& data, const wstring& file);
-	void SetPMXModelData(PMXModelData& data, int i) override;
 
-	struct VertexBuffer
-	{
-		ID3D11Buffer* _buffer;
-		uint _stride;
-		uint _offset;
-	};
+	void SetPMXModelData(PMXModelData& data, int i) override;
 
 	struct SHADER_SCENE
 	{
@@ -113,19 +95,11 @@ private:
 		ID3D11PixelShader*	shader;
 		ID3D11SamplerState* sampler;
 	};
-	struct ComputeShader
-	{
-		ID3D11ComputeShader* shader;
-		ID3D11Buffer*		 buffer;
-		ID3D11ShaderResourceView* shaderResource;
-		ID3D11UnorderedAccessView* unordereAcces;
-	};
 
 	struct Shader
 	{
 		std::vector<uint> _vertexShader;
 		std::vector<uint> _pixelShader;
-		std::vector<uint> _geometryShader;
 		std::vector<uint> _constantBuffer;
 	};
 
@@ -135,21 +109,16 @@ private:
 	void Init()   override;
 	void Uninit() override;
 
-	uint InsideBuffer();
-
 	DirectX11* _directX11;
 
-	std::vector<VertexBuffer>  _vertexBuffer;
 
 	ID3D11DepthStencilState*   _depthState;
 	ID3D11RasterizerState*     _rasterizerState;
 
 
-	std::vector<VertexShader>			_vertexShader;
-	std::vector<PixelShader>			_pixelShader;
-	std::vector<ID3D11GeometryShader*>	_geometryShader;
-	std::vector<ComputeShader>			_computeShader;
-
+	std::vector<VertexShader>  _vertexShader;
+	std::vector<PixelShader>   _pixelShader;
+	std::vector<ID3D11GeometryShader> _geometryShader;
 	// シェーダとのデータのやりとりをするやつ
 	std::vector<ID3D11Buffer*> _constantBuffer;
 
